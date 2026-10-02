@@ -3,6 +3,14 @@
 Single-file landing page for Blue Beret, a data and AI consulting firm.
 
 - `index.html` — the entire site: styles, scripts, fonts, and images are inlined, so it runs anywhere with no build step.
+- `alt.html` — separate blue-and-white agency concept inspired by UXPERT's
+  large typography and motion-led introduction. Open directly or visit
+  `/alt.html` on the local server. The original homepage is unchanged.
+
+The alternative uses scroll-triggered text and project reveals, staggered
+report graphics, rising sales bars and a scroll-linked hero graphic in supported
+browsers. There is no showreel. Motion respects reduced-motion preferences;
+content remains readable without JavaScript. The menu is keyboard-accessible.
 
 ## Preview locally
 

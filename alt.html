@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Blue Beret. Independent data and AI consultancy in Ireland. Reporting automation, sales analysis and customer insight.">
+  <meta name="theme-color" content="#174af0">
+  <title>Blue Beret — A different view of your data</title>
+  <style>
+    :root { color-scheme: light; --blue:#174af0; --deep:#1233a0; --ink:#10254c; --muted:#52617b; --paper:#fff; --wash:#edf2ff; --line:#cbd7f0; --ease:cubic-bezier(.2,.8,.2,1); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:90px; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Segoe UI Variable Display","Segoe UI",Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+    body.modal-open { overflow:hidden; }
+    h1,h2,h3,p { margin:0; }
+    h1,h2,h3 { text-wrap:balance; }
+    a { color:inherit; }
+    button { font:inherit; cursor:pointer; }
+    button,a,summary { -webkit-tap-highlight-color:transparent; }
+    button:focus-visible,a:focus-visible,summary:focus-visible { outline:3px solid currentColor; outline-offset:6px; }
+    button { color:inherit; }
+    .shell { width:min(1440px,100%); padding-inline:clamp(22px,4.5vw,80px); margin-inline:auto; }
+    .skip { position:fixed; top:-80px; left:20px; z-index:4; padding:12px 20px; background:white; color:var(--blue); }
+    .skip:focus { top:10px; }
+    .nav { height:88px; display:flex; justify-content:space-between; align-items:center; }
+    .brand { font-size:24px; font-weight:750; letter-spacing:-1px; text-decoration:none; display:flex; align-items:center; gap:11px; }
+    .brand-mark { width:25px; height:25px; background:var(--blue); border-radius:50% 50% 4px 50%; transform:rotate(-20deg); position:relative; }
+    .brand-mark::after { content:""; position:absolute; width:12px; height:3px; background:var(--blue); bottom:-5px; right:0; }
+    .nav-right { display:flex; align-items:center; gap:42px; }
+    .nav-right > a { text-decoration:none; font-size:14px; }
+    .nav-right > a:hover { color:var(--blue); }
+    .menu-button { background:none; border:0; padding:10px 0 10px 12px; display:flex; align-items:center; gap:14px; font-size:14px; }
+    .menu-lines { width:25px; height:12px; border-block:2px solid var(--ink); }
+    .hero { margin:0 20px; background:var(--blue); color:white; position:relative; overflow:hidden; isolation:isolate; }
+    .hero-inner { min-height:600px; min-height:min(720px,calc(100svh - 108px)); display:flex; flex-direction:column; justify-content:center; padding-block:64px 54px; position:relative; }
+    .hero-meta { font-size:12px; letter-spacing:.04em; margin-bottom:30px; }
+    h1 { font-size:clamp(58px,8.1vw,120px); font-weight:650; letter-spacing:-.07em; line-height:.97; position:relative; z-index:1; max-width:10ch; }
+    .hero-bottom { display:flex; align-items:flex-end; justify-content:space-between; gap:40px; margin-top:38px; position:relative; z-index:1; }
+    .hero-bottom > p { font-size:17px; line-height:1.6; max-width:33ch; color:#edf2ff; }
+    .motion-toggle { position:absolute; right:24px; top:20px; color:#edf2ff; border:1px solid #829efa; background:transparent; font-size:11px; padding:7px 10px; border-radius:0; }
+    .opening { position:relative; }
+    .report-stage { position:absolute; right:5%; top:24%; width:36%; aspect-ratio:1.18; color:var(--blue); }
+    .report-paper { position:absolute; inset:0; background:white; padding:26px; transform:rotate(5deg); box-shadow:15px 20px 0 #103bc3; }
+    .report-heading { font-size:15px; font-weight:600; }
+    .report-heading span { display:block; margin-top:7px; font-size:10px; font-weight:400; color:var(--muted); }
+    .report-grid { position:absolute; inset:85px 26px 54px; background:repeating-linear-gradient(0deg,transparent 0 27px,#dce5ff 27px 28px),repeating-linear-gradient(90deg,transparent 0 62px,#dce5ff 62px 63px); }
+    .report-row { position:absolute; left:26px; top:calc(94px + var(--i)*28px); height:12px; width:calc(66% - var(--i)*4%); background:#adc3ff; transform-origin:left top; }
+    .report-row:nth-of-type(even) { background:#174af0; }
+    .report-note { position:absolute; left:26px; bottom:22px; font-size:10px; color:var(--muted); }
+    .report-result { position:absolute; inset:25px 26px auto; opacity:0; font-size:19px; font-weight:600; }
+    .report-result small { display:block; font-size:10px; margin-top:8px; font-weight:400; }
+    .opening-caption { position:absolute; left:0; bottom:-48px; font-size:11px; letter-spacing:.03em; color:#edf2ff; }
+    .opening-caption span { margin-inline:12px; }
+    .hero .data-sculpture { display:none; }
+    .team { padding-block:100px; }
+    .team-heading { display:grid; grid-template-columns:1.2fr 1fr; gap:90px; margin-bottom:48px; }
+    .team-heading h2 { font-size:clamp(40px,5vw,68px); font-weight:550; line-height:1.05; letter-spacing:-.055em; }
+    .team-heading p { color:var(--muted); line-height:1.8; max-width:40ch; }
+    .people { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+    .person:nth-child(2) { margin-top:65px; }
+    .portrait { aspect-ratio:1.5; background:var(--wash); position:relative; overflow:hidden; display:flex; justify-content:center; align-items:center; }
+    .portrait-number { font-size:clamp(100px,16vw,230px); font-weight:600; color:#cfdbff; letter-spacing:-.09em; line-height:1; }
+    .portrait-label { position:absolute; bottom:20px; left:24px; font-size:11px; color:var(--deep); }
+    .person h3 { font-size:27px; font-weight:550; letter-spacing:-.04em; margin-top:23px; }
+    .person-role { color:var(--blue); font-size:12px; margin-block:8px 15px; }
+    .person-bio { font-size:15px; color:var(--muted); line-height:1.7; max-width:43ch; }
+    .sheet { position:relative; overflow:hidden; }
+    .scan-line { position:absolute; left:10%; right:10%; height:2px; top:30%; background:var(--blue); opacity:0; }
+    .review-topics { display:flex; gap:8px; flex-wrap:wrap; margin-top:24px; }
+    .review-topics span { border-top:1px solid #a8bcef; padding-top:8px; font-size:10px; color:var(--deep); flex:1; }
+    @keyframes paper-turn { to { transform:rotate(0deg); } }
+    @keyframes grid-away { to { opacity:0; } }
+    @keyframes report-in { 0%,45% { opacity:0; transform:translateY(10px); } 80%,100% { opacity:1; transform:translateY(0); } }
+    @keyframes row-to-bar { to { top:76%; left:calc(12% + var(--i)*18%); width:12%; height:calc(48px + var(--i)*23px); transform:translateY(-100%); background:#174af0; } }
+    @media(prefers-reduced-motion:no-preference) {
+      @supports(animation-timeline:view()) {
+        .opening { height:165svh; view-timeline-name:--opening; view-timeline-axis:block; }
+        .opening .hero { position:sticky; top:0; }
+        .report-paper,.report-grid,.report-heading,.report-row,.report-result { animation-timing-function:linear; animation-fill-mode:both; animation-timeline:--opening; animation-range:contain 0% contain 90%; }
+        .report-paper { animation-name:paper-turn; }
+        .report-grid,.report-heading { animation-name:grid-away; }
+        .report-row { animation-name:row-to-bar; }
+        .report-result { animation-name:report-in; }
+        .motion-paused .report-paper,.motion-paused .report-grid,.motion-paused .report-heading,.motion-paused .report-row,.motion-paused .report-result { animation:none; }
+      }
+    }
+    @media(max-width:700px) {
+      .hero .hero-inner { min-height:760px; }
+      .report-stage { top:auto; bottom:70px; right:12%; width:73%; max-width:320px; }
+      .report-paper { padding:20px; }
+      .report-row { top:calc(84px + var(--i)*23px); height:10px; }
+      .report-grid { top:77px; }
+      .team { padding-block:66px; }
+      .team-heading { grid-template-columns:1fr; gap:25px; }
+      .people { grid-template-columns:1fr; gap:42px; }
+      .person:nth-child(2) { margin-top:0; }
+      .portrait-number { font-size:150px; }
+      .rating-art { min-height:365px; }
+    }
+    /* Abstract data sculpture: depth comes from bars changing alignment, not a mock interface. */
+    .data-sculpture { width:clamp(260px,37vw,550px); height:360px; position:absolute; right:1%; top:15%; display:flex; align-items:center; justify-content:center; gap:8px; transform:rotate(-28deg); pointer-events:none; z-index:0; }
+    .data-sculpture i { display:block; width:7.5%; height:calc(90px + var(--n)*21px); background:linear-gradient(180deg,#fff 0%,#b1c9ff 100%); opacity:.88; transform:translateY(calc(var(--n)*-4px)); }
+    .data-sculpture i:nth-child(even) { height:calc(240px - var(--n)*13px); }
+    @keyframes align-bars { 0%,100% { transform:translateY(calc(var(--n)*-4px)); } 50% { transform:translateY(calc(var(--n)*7px - 35px)); } }
+    @media(prefers-reduced-motion:no-preference) { .data-sculpture i { animation:align-bars 7s var(--ease) infinite; animation-delay:calc(var(--n)*-.3s); } }
+    .motion-paused .data-sculpture i { animation-play-state:paused; }
+    .intro { padding-block:110px 100px; display:grid; grid-template-columns:1.2fr 1fr; gap:90px; align-items:start; }
+    .intro h2 { font-size:clamp(36px,4vw,58px); letter-spacing:-.055em; line-height:1.12; font-weight:550; max-width:15ch; }
+    .intro-copy p { color:var(--muted); font-size:18px; line-height:1.75; max-width:43ch; }
+    .intro-copy p + p { margin-top:16px; }
+    .inline-link { display:inline-flex; align-items:center; gap:24px; margin-top:26px; text-decoration:none; padding-bottom:7px; border-bottom:1px solid var(--blue); color:var(--blue); font-size:15px; }
+    .inline-link span { transition:transform .25s; } .inline-link:hover span { transform:translate(4px,-4px); }
+    .work { padding-bottom:105px; }
+    .section-title { font-size:clamp(44px,6vw,82px); letter-spacing:-.06em; line-height:1.05; font-weight:600; margin-bottom:42px; }
+    .projects { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:66px 32px; }
+    .project { min-width:0; }
+    .project:first-child { grid-column:1/-1; }
+    .project-art { aspect-ratio:1.4; background:var(--wash); position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:center; padding:45px; }
+    .project:first-child .project-art { aspect-ratio:2.55; display:grid; grid-template-columns:1fr 1.1fr; gap:60px; align-items:center; padding:50px 65px; background:var(--blue); color:white; }
+    .art-statement { font-size:clamp(32px,4.4vw,64px); font-weight:550; line-height:1.03; letter-spacing:-.06em; }
+    .art-statement em { font-style:normal; color:#bccdff; }
+    .pipeline { display:flex; align-items:center; gap:12px; justify-content:center; }
+    .sheet { width:135px; height:180px; border:1px solid #b2c5ff; padding:21px 15px; transform:rotate(-9deg); background:#fff; color:var(--blue); }
+    .sheet strong { font-size:12px; font-weight:600; }
+    .sheet-lines { margin-top:18px; height:100px; background:repeating-linear-gradient(to bottom,transparent 0 15px,#cbd7f0 15px 16px); position:relative; }
+    .sheet-lines::after { content:""; position:absolute; left:66%; top:0; bottom:0; border-left:1px solid #cbd7f0; }
+    .pipeline-arrow { font-size:35px; color:#b7caff; }
+    .output-stack { width:172px; display:grid; gap:9px; }
+    .output-stack span { display:block; padding:16px; border:1px solid #9bb5ff; background:#174af0; font-size:14px; }
+    .output-stack span:nth-child(2) { background:white; color:var(--blue); transform:translateX(16px); }
+    .project-caption { display:flex; justify-content:space-between; gap:24px; align-items:start; margin-top:23px; }
+    .project-caption h3 { font-size:25px; font-weight:600; letter-spacing:-.045em; }
+    .project-caption p { color:var(--muted); font-size:14px; margin-top:8px; line-height:1.5; }
+    .project details { margin-top:20px; }
+    .project summary { color:var(--blue); cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:18px; font-size:14px; border-bottom:1px solid var(--line); padding-bottom:8px; }
+    .project summary::-webkit-details-marker { display:none; }
+    .project summary::after { content:"+"; font-size:22px; line-height:1; }
+    .project details[open] summary::after { content:"−"; }
+    .project-text { padding-top:24px; max-width:72ch; font-size:15px; line-height:1.8; color:var(--muted); }
+    .project-text p+p { margin-top:15px; }
+    .project-text strong { color:var(--ink); font-weight:600; }
+    .project-facts { margin:25px 0 0; display:flex; gap:40px; flex-wrap:wrap; }
+    .project-facts dt { font-size:12px; color:var(--muted); }
+    .project-facts dd { margin:5px 0 0; font-size:18px; color:var(--blue); }
+    .sales-art { background:#eaf1ff; }
+    .sales-top { font-size:14px; color:var(--deep); margin-bottom:26px; }
+    .sales-chart { display:flex; gap:35px; height:190px; align-items:flex-end; padding:0 25px; border-bottom:1px solid #aac1f1; }
+    .sales-bar { flex:1; background:var(--blue); height:100%; position:relative; transform-origin:bottom; }
+    .sales-bar:first-child { height:33.66%; background:#a8bff9; }
+    .sales-bar b { position:absolute; top:-28px; width:100%; text-align:center; font-size:17px; color:var(--deep); font-weight:500; }
+    .sales-labels { display:flex; gap:35px; padding:12px 25px 0; color:var(--deep); font-size:13px; }
+    .sales-labels span { flex:1; text-align:center; }
+    .rating-art { background:#dfe9ff; justify-content:center; }
+    .rating-pair { display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .rating-pair strong { display:block; font-size:clamp(62px,7.5vw,112px); line-height:1; color:var(--blue); letter-spacing:-.08em; font-weight:550; }
+    .rating-pair div:last-child strong { color:var(--deep); }
+    .rating-pair p { font-size:13px; line-height:1.5; color:var(--deep); margin-top:14px; }
+    .rating-rule { height:100px; border-left:1px solid #a8bcef; transform:rotate(20deg); }
+    .rating-art > p { font-size:12px; color:var(--deep); margin-top:35px; }
+    .services { padding-block:90px; background:var(--wash); }
+    .services-header { margin-bottom:55px; }
+    .services-header h2 { font-size:clamp(40px,5vw,68px); letter-spacing:-.055em; font-weight:550; line-height:1.1; max-width:16ch; }
+    .service-row { display:grid; grid-template-columns:1fr 1.05fr; gap:80px; padding-block:32px; border-top:1px solid var(--line); }
+    .service-row h3 { font-size:clamp(23px,3vw,36px); font-weight:500; letter-spacing:-.045em; }
+    .service-row p { max-width:47ch; color:var(--muted); font-size:16px; line-height:1.8; }
+    .closing { padding-block:115px 90px; }
+    .closing p { font-size:16px; color:var(--muted); margin-bottom:24px; }
+    .closing a { font-size:clamp(48px,8.5vw,120px); line-height:1.1; letter-spacing:-.07em; color:var(--blue); text-decoration:none; display:inline-block; }
+    .closing a:hover { text-decoration:underline; text-decoration-thickness:3px; text-underline-offset:12px; }
+    footer { display:flex; justify-content:space-between; gap:24px; padding-block:27px!important; border-top:1px solid var(--line); font-size:12px; color:var(--muted); }
+    footer a { text-underline-offset:4px; }
+    dialog { border:0; padding:0; color:var(--ink); }
+    dialog::backdrop { background:rgb(10 30 75 / .6); backdrop-filter:blur(8px); }
+    .menu-dialog { width:min(680px,calc(100% - 32px)); background:white; padding:36px; }
+    .dialog-top { display:flex; justify-content:space-between; align-items:center; gap:20px; font-size:13px; }
+    .close { background:transparent; color:inherit; border:1px solid currentColor; padding:10px 15px; font-size:13px; }
+    .menu-links { display:grid; gap:20px; padding-block:50px; }
+    .menu-links a { font-size:clamp(30px,5vw,55px); letter-spacing:-.05em; text-decoration:none; }
+    .menu-links a:hover { color:var(--blue); }
+    .menu-foot { color:var(--muted); font-size:13px; }
+    /* Native scroll progress gives the hero depth without capturing the scroll wheel. */
+    @keyframes hero-drift { from { transform:translateY(0) rotate(-28deg); } to { transform:translateY(150px) rotate(-14deg); } }
+    @media(prefers-reduced-motion:no-preference) {
+      @supports(animation-timeline:view()) {
+        .hero { view-timeline-name:--hero-exit; }
+        .data-sculpture { animation:hero-drift linear both; animation-timeline:--hero-exit; animation-range:exit 0% exit 100%; }
+        .motion-paused .data-sculpture { animation:none; }
+      }
+    }
+    @media(min-width:1600px) { .hero-inner { min-height:740px; } }
+    @media(max-width:1000px) {
+      .hero-inner { min-height:620px; } .data-sculpture { right:-5%; top:19%; opacity:.7; }
+      .intro { gap:45px; } .project:first-child .project-art { padding:40px; gap:25px; }
+      .sheet { width:110px; height:150px; } .sheet-lines { height:80px; } .output-stack { width:145px; }
+      .project-art { padding:30px; } .sales-chart { height:150px; }
+    }
+    @media(max-width:700px) {
+      html { scroll-padding-top:20px; } .nav { height:76px; } .brand { font-size:21px; }
+      .nav-right > a { display:none; } .nav-right { gap:0; }
+      .hero { margin-inline:10px; } .hero-inner { min-height:660px; padding-block:60px 30px; justify-content:flex-start; }
+      .hero-meta { max-width:22ch; line-height:1.5; margin-bottom:30px; }
+      h1 { font-size:clamp(56px,12vw,82px); max-width:10ch; }
+      .data-sculpture { width:240px; height:220px; top:260px; right:-50px; opacity:.35; }
+      .hero-bottom { flex-direction:column; align-items:flex-start; gap:30px; margin-top:28px; }
+      .hero-bottom > p { max-width:27ch; font-size:16px; }
+      .motion-toggle { right:15px; top:15px; }
+      .intro { grid-template-columns:1fr; gap:30px; padding-block:66px; }
+      .intro h2 { max-width:17ch; } .intro-copy p { font-size:16px; }
+      .work { padding-bottom:66px; } .projects { grid-template-columns:minmax(0,1fr); gap:45px; }
+      .project:first-child { grid-column:auto; } .project:first-child .project-art { aspect-ratio:auto; min-height:450px; grid-template-columns:1fr; gap:30px; padding:32px; }
+      .art-statement { font-size:42px; max-width:11ch; } .pipeline { justify-content:flex-start; gap:8px; }
+      .sheet { width:80px; height:140px; padding:14px 10px; flex-shrink:0; } .sheet strong { font-size:10px; }
+      .output-stack { width:100px; flex-shrink:0; } .output-stack span { padding:12px 8px; font-size:11px; }
+      .output-stack span:nth-child(2) { transform:translateX(8px); } .pipeline-arrow { font-size:20px; }
+      .project-art { aspect-ratio:1.1; padding:30px; } .sales-chart { height:175px; }
+      .project-caption h3 { font-size:23px; } .rating-pair strong { font-size:90px; }
+      .services { padding-block:65px; } .services-header { margin-bottom:35px; }
+      .service-row { grid-template-columns:1fr; gap:14px; padding-block:26px; }
+      .closing { padding-block:70px; } footer { flex-direction:column; gap:12px; }
+    }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation:none!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="shell nav">
+    <a class="brand" href="#top" aria-label="Blue Beret home"><span class="brand-mark" aria-hidden="true"></span>Blue Beret</a>
+    <div class="nav-right"><a href="#work">Selected work</a><a href="#contact">Get in touch</a><button class="menu-button" id="menuOpen" aria-haspopup="dialog">Menu <span class="menu-lines" aria-hidden="true"></span></button></div>
+  </header>
+  <main id="main">
+    <div class="opening" id="top">
+    <section class="hero" aria-labelledby="heroTitle">
+      <div class="hero-inner shell">
+        <p class="hero-meta">Independent data &amp; AI consultancy</p>
+        <h1 id="heroTitle">Data into<br>direction.</h1>
+        <div class="report-stage" role="img" aria-label="Illustration: spreadsheet rows become a clear report as you scroll">
+          <div class="report-paper" aria-hidden="true">
+            <p class="report-heading">The everyday spreadsheet<span>Rows, columns. A question waiting to be answered.</span></p>
+            <div class="report-grid"></div>
+            <i class="report-row" style="--i:0"></i><i class="report-row" style="--i:1"></i><i class="report-row" style="--i:2"></i><i class="report-row" style="--i:3"></i>
+            <p class="report-result">A clearer picture.<small>Ready for a closer look. Ready for a decision.</small></p>
+            <p class="report-note">Blue Beret / Illustrative workflow</p>
+          </div>
+          <p class="opening-caption" aria-hidden="true">Spreadsheet <span>→</span> Report <span>↓</span> Scroll to transform</p>
+        </div>
+        <div class="hero-bottom">
+          <p>We turn business questions into clear analysis and software your team can use.</p>
+        </div>
+      </div>
+      <button class="motion-toggle" id="motionToggle" aria-pressed="false">Pause background</button>
+    </section>
+    </div>
+
+    <section class="shell intro" id="about" aria-labelledby="introTitle">
+      <h2 id="introTitle">A fresh perspective.<br>A practical way forward.</h2>
+      <div class="intro-copy"><p>We’re a two-person consultancy in Ireland. We work with the spreadsheets, reports and questions that are already part of your business.</p><p>Sometimes you need a clearer answer. Sometimes you need a tool that takes the repetitive work off your hands. We help you get there.</p><a class="inline-link" href="#services">How we can help <span aria-hidden="true">↗</span></a></div>
+    </section>
+
+    <section class="shell work" id="work" aria-labelledby="workTitle">
+      <h2 class="section-title" id="workTitle">The work speaks.</h2>
+      <div class="projects">
+        <article class="project" id="accounting">
+          <div class="project-art"><p class="art-statement">Same workbook.<br><em>New workflow.</em></p><div class="pipeline" role="img" aria-label="An Excel workbook becomes a dashboard, review note and analysis file"><div class="sheet"><strong>Quarterly accounts</strong><div class="sheet-lines" aria-hidden="true"></div></div><span class="pipeline-arrow" aria-hidden="true">→</span><div class="output-stack"><span>Dashboard</span><span>Review note</span><span>Analysis file</span></div></div></div>
+          <div class="project-caption"><div><h3>O’Sullivan Clarke</h3><p>Reporting automation · July–September 2026</p></div></div>
+          <details><summary>Inside the project</summary><div class="project-text"><p><strong>The question:</strong> could the practice prepare quarterly management-account reviews without repeating the same manual calculations for every retail client?</p><p>We built a local workflow that finds figures by row labels and reporting dates, calculates the comparisons, applies review rules and produces a dashboard, review note and structured analysis file. The practice keeps its existing workbooks.</p><p>Headline figures reconciled across four client workbooks and three comparison periods. After installation, the practice ran additional unseen accounts. A fifth store exposed new format variations; we fixed them and checked the four validated clients again. The accountant checks the output before sending it.</p><dl class="project-facts"><div><dt>Validated during the build</dt><dd>4 client workbooks</dd></div><div><dt>Compared per workbook</dt><dd>3 reporting periods</dd></div><div><dt>Standard workflow</dt><dd>Runs locally</dd></div></dl></div></details>
+        </article>
+        <article class="project" id="sales">
+          <div class="project-art sales-art" role="img" aria-label="Mr Wu average daily net sales: Monday 1,233.91 euro and Saturday 3,665.89 euro"><p class="sales-top">A different kind of Saturday.</p><div class="sales-chart" aria-hidden="true"><div class="sales-bar"><b>€1,234</b></div><div class="sales-bar"><b>€3,666</b></div></div><div class="sales-labels" aria-hidden="true"><span>Monday</span><span>Saturday</span></div></div>
+          <div class="project-caption"><div><h3>Mr Wu</h3><p>Sales analysis &amp; channel economics</p></div></div>
+          <details><summary>Inside the project</summary><div class="project-text"><p>We examined 396 daily records covering January 2025–January 2026: 30,291 orders and €878,385.31 in recorded net sales.</p><p>Saturday averaged €3,665.89 in sales, almost three times Monday’s €1,233.91. The analysis informed recommendations for staffing, stock preparation and a limited direct-order incentive pilot.</p><p>Moving 20% of Just Eat orders to owned channels produced a <strong>modelled €7,606.82 improvement before food costs</strong>, assuming all displaced demand was retained. This is an opportunity estimate, not a realised saving. Ingredient costs were absent from the records; incentives and fulfilment costs would also affect the outcome.</p></div></details>
+        </article>
+        <article class="project" id="reviews">
+          <div class="project-art rating-art"><div class="rating-pair"><div><strong>4.3</strong><p>Dine-in<br>average rating / 5</p></div><span class="rating-rule" aria-hidden="true"></span><div><strong>3.1</strong><p>Delivery &amp; takeaway<br>average rating / 5</p></div></div><p>One restaurant. Two customer experiences.</p><div class="review-topics"><span>Wait times</span><span>Food quality</span><span>Service</span></div></div>
+          <div class="project-caption"><div><h3>Chuan City</h3><p>Customer reviews &amp; reputation analysis</p></div></div>
+          <details><summary>Inside the project</summary><div class="project-text"><p>Chuan City wanted to understand declining Google ratings. We collected 361 reviews, retained 250 with full metadata and analysed the 146 containing written text.</p><p>Delivery and takeaway averaged 3.1 stars against 4.3 for dine-in. Delivery wait time appeared negatively in <strong>59% of one-star reviews</strong>; food quality appeared negatively in 48%. These review patterns suggest where to investigate, without establishing causation.</p><p>We recommended peak-time delivery limits, proactive wait updates and clearer driver conduct standards. These were recommendations from the analysis; we do not claim subsequent changes in ratings.</p></div></details>
+        </article>
+      </div>
+    </section>
+
+    <section class="services" id="services" aria-labelledby="servicesTitle"><div class="shell">
+      <div class="services-header"><h2 id="servicesTitle">From the first question<br>to a working answer.</h2></div>
+      <div class="service-row"><h3>Data &amp; AI advice</h3><p>Make sense of what you have, identify what is worth changing and work out where AI or automation could help.</p></div>
+      <div class="service-row"><h3>Reporting &amp; automation</h3><p>Turn recurring spreadsheet work into a repeatable process, with clear outputs and checks your team can understand.</p></div>
+      <div class="service-row"><h3>Business analysis</h3><p>Understand sales, channel costs and customer feedback. Get findings tied to the decisions you need to make.</p></div>
+    </div></section>
+
+    <section class="shell team" id="team" aria-labelledby="teamTitle">
+      <div class="team-heading"><h2 id="teamTitle">Two people.<br>A fresh pair of eyes.</h2><p>We’re the people behind Blue Beret. This space will introduce who we are, what we bring to the work and why we started the business.</p></div>
+      <div class="people">
+        <article class="person"><div class="portrait"><span class="portrait-number" aria-hidden="true">01</span><span class="portrait-label">Portrait to come</span></div><h3>[Your name]</h3><p class="person-role">Co-founder · [Your focus]</p><p class="person-bio">[A short introduction in your own words: your background, the work you enjoy and what you bring to Blue Beret.]</p></article>
+        <article class="person"><div class="portrait"><span class="portrait-number" aria-hidden="true">02</span><span class="portrait-label">Portrait to come</span></div><h3>[Your name]</h3><p class="person-role">Co-founder · [Your focus]</p><p class="person-bio">[A short introduction in your own words: your background, the work you enjoy and what you bring to Blue Beret.]</p></article>
+      </div>
+    </section>
+    <section class="shell closing" id="contact"><p>Have a question your data could answer?</p><h2><a href="mailto:hello@blueberet.example">Let’s take a look. <span aria-hidden="true">↗</span></a></h2></section>
+  </main>
+  <footer class="shell"><span>Blue Beret Group · Independent consultancy, Ireland</span><a href="index.html">View the original website</a><span>© <span id="year">2026</span> Blue Beret Group</span></footer>
+
+  <dialog class="menu-dialog" id="menuDialog" aria-labelledby="menuTitle"><div class="dialog-top"><span id="menuTitle">Explore Blue Beret</span><button class="close" data-close="menuDialog">Close menu</button></div><nav class="menu-links" aria-label="Main menu"><a href="#about">Meet Blue Beret</a><a href="#work">Selected work</a><a href="#services">How we help</a><a href="#contact">Get in touch</a></nav><p class="menu-foot">Data, analysis and automation for the way you work.</p></dialog>
+
+  <script>
+  (() => {
+    'use strict';
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const hero = document.querySelector('.hero');
+    const motionButton = document.getElementById('motionToggle');
+    let backgroundPaused = motion.matches;
+    function updateBackground() {
+      hero.classList.toggle('motion-paused', backgroundPaused);
+      motionButton.textContent = motion.matches ? 'Reduced motion on' : backgroundPaused ? 'Resume background' : 'Pause background';
+      motionButton.setAttribute('aria-pressed', String(backgroundPaused));
+      motionButton.disabled = motion.matches;
+    }
+    motionButton.addEventListener('click', () => { backgroundPaused = !backgroundPaused; updateBackground(); });
+    updateBackground();
+
+    const menu = document.getElementById('menuDialog');
+    const teamLink = document.createElement('a');
+    teamLink.href = '#team'; teamLink.textContent = 'The people behind it';
+    menu.querySelector('a[href="#contact"]').before(teamLink);
+    function openDialog(dialog) { dialog.showModal(); document.body.classList.add('modal-open'); }
+    document.getElementById('menuOpen').addEventListener('click', () => openDialog(menu));
+    document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => document.getElementById(button.dataset.close).close()));
+    menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menu.close()));
+    [menu].forEach(dialog => {
+      dialog.addEventListener('close', () => { document.body.classList.remove('modal-open'); });
+      dialog.addEventListener('click', e => { if (e.target === dialog) { const r = dialog.getBoundingClientRect(); if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close(); } });
+    });
+
+    // Entrance animations only begin when their content comes into view.
+    // Default content stays visible if JavaScript or motion APIs are unavailable.
+    const entrances = new Set();
+    let observer;
+    function animate(node, frames, delay = 0, duration = 850) {
+      const animation = node.animate(frames, { duration, delay, easing:'cubic-bezier(.16,1,.3,1)', fill:'backwards' });
+      entrances.add(animation);
+      animation.finished.then(() => entrances.delete(animation)).catch(() => entrances.delete(animation));
+    }
+    function enableScrollMotion() {
+      if (motion.matches || !('IntersectionObserver' in window) || !Element.prototype.animate) return;
+      observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          const node = entry.target;
+          observer.unobserve(node);
+          if (node.classList.contains('project-art')) {
+            animate(node, [{opacity:0,transform:'translateY(55px) scale(.96)'},{opacity:1,transform:'translateY(0) scale(1)'}],0,1050);
+            const sheet = node.querySelector('.sheet');
+            if (sheet) {
+              animate(sheet,[{transform:'rotate(-16deg) translateY(24px)'},{transform:'rotate(-9deg) translateY(0)'}],100,900);
+              const scan = document.createElement('i'); scan.className = 'scan-line'; scan.setAttribute('aria-hidden','true'); sheet.append(scan);
+              animate(scan,[{opacity:0,transform:'translateY(0)'},{opacity:1,transform:'translateY(0)',offset:.15},{opacity:1,transform:'translateY(85px)',offset:.85},{opacity:0,transform:'translateY(85px)'}],350,950);
+            }
+            node.querySelectorAll('.output-stack span').forEach((item,i) => {
+              const end = getComputedStyle(item).transform;
+              animate(item,[{opacity:0,transform:'translateX(-35px) rotate(-5deg)'},{opacity:1,transform:end}],1000+i*180);
+            });
+            node.querySelectorAll('.sales-bar').forEach((bar,i) => animate(bar,[{transform:'scaleY(.05)'},{transform:'scaleY(1)'}],180+i*150,1100));
+            node.querySelectorAll('.sales-bar b').forEach((label,i) => animate(label,[{opacity:0},{opacity:1}],1000+i*150,450));
+            node.querySelectorAll('.rating-pair > div').forEach((item,i) => animate(item,[{opacity:0,transform:`translateX(${i ? '-35' : '35'}px)`},{opacity:1,transform:'translateX(0)'}],200+i*100,1000));
+            const rule = node.querySelector('.rating-rule');
+            if (rule) animate(rule,[{transform:'rotate(0deg) scaleY(0)'},{transform:'rotate(20deg) scaleY(1)'}],350,850);
+            node.querySelectorAll('.review-topics span').forEach((item,i) => animate(item,[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],950+i*130,650));
+          } else {
+            animate(node,[{opacity:0,transform:'translateY(35px)'},{opacity:1,transform:'translateY(0)'}]);
+          }
+        }
+      }, {threshold:.12});
+      document.querySelectorAll('.intro h2,.intro-copy,.section-title,.project-art,.project-caption,.services-header,.service-row,.team-heading,.person,.closing').forEach(node => observer.observe(node));
+    }
+    enableScrollMotion();
+    motion.addEventListener('change', () => {
+      backgroundPaused = motion.matches; updateBackground();
+      observer?.disconnect();
+      entrances.forEach(animation => animation.cancel()); entrances.clear();
+      if (!motion.matches) enableScrollMotion();
+    });
+    document.getElementById('year').textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>
