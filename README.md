@@ -1,12 +1,8 @@
 # Blue Beret — Website
 
-Blue Beret's website, built with HTML, CSS and strict TypeScript using Vite.
-
-- `index.html` — original homepage, with its behaviour in `src/main.ts`.
-- `src/alternative.ts` — alternative website's TypeScript behaviour.
-- `alt.html` — separate blue-and-white agency concept inspired by UXPERT's
-  large typography and motion-led introduction. Open directly or visit
-  `/alt.html` on the development or preview server.
+Blue Beret's website, built with Next.js, React, CSS and strict TypeScript.
+The original homepage is at `/`; the alternative is at `/alt`.
+The old `/alt.html` address redirects to `/alt`.
 
 The alternative uses scroll-triggered text and project reveals, staggered
 report graphics, rising sales bars and a scroll-linked hero graphic in supported
@@ -24,14 +20,10 @@ npm run dev
 
 ## Deploy
 
-Run `npm run build` to type-check both scripts and compile both pages into `dist/`.
-Run `npm run preview` to check the production build locally.
-
-Import this repository into Vercel. `vercel.json` configures the Vite preset,
-`npm run build` command and `dist` output directory. The homepage is `/` and
-option two is `/alt.html`. TypeScript is compiled to browser JavaScript;
-opening the source HTML directly with `file://` no longer runs its scripts.
-Other static hosts should publish the complete `dist/` directory, including assets.
+Run `npm run build` to compile the browser scripts and build/type-check the
+Next.js pages. Run `npm start` to check the production build locally.
+`vercel.json` selects Next.js and the `npm run build` command.
+Generated `.next/` and `public/scripts/` files are excluded from Git.
 
 ## Content and design
 

@@ -11,6 +11,8 @@ export {};
     const motionButton = required<HTMLButtonElement>('#motionToggle');
     let backgroundPaused = motion.matches;
     function updateBackground() {
+      // This synchronises the CSS animation state, button label and accessible
+      // pressed state with the visitor's reduced-motion preference.
       hero.classList.toggle('motion-paused', backgroundPaused);
       motionButton.textContent = motion.matches ? 'Reduced motion on' : backgroundPaused ? 'Resume background' : 'Pause background';
       motionButton.setAttribute('aria-pressed', String(backgroundPaused));
@@ -37,6 +39,8 @@ export {};
     const entrances = new Set<Animation>();
     let observer: IntersectionObserver | undefined;
     function animate(node: Element, frames: Keyframe[], delay = 0, duration = 850) {
+      // "backwards" holds the first frame during a staggered delay, then lets
+      // the normal CSS take over once the animation finishes.
       const animation = node.animate(frames, { duration, delay, easing:'cubic-bezier(.16,1,.3,1)', fill:'backwards' });
       entrances.add(animation);
       animation.finished.then(() => entrances.delete(animation)).catch(() => entrances.delete(animation));
@@ -51,6 +55,7 @@ export {};
           if (node.classList.contains('project-art')) {
             animate(node, [{opacity:0,transform:'translateY(55px) scale(.96)'},{opacity:1,transform:'translateY(0) scale(1)'}],0,1050);
             const sheet = node.querySelector('.sheet');
+            // Accounting: scan the workbook before revealing its outputs.
             if (sheet) {
               animate(sheet,[{transform:'rotate(-16deg) translateY(24px)'},{transform:'rotate(-9deg) translateY(0)'}],100,900);
               const scan = document.createElement('i'); scan.className = 'scan-line'; scan.setAttribute('aria-hidden','true'); sheet.append(scan);
@@ -61,8 +66,10 @@ export {};
               animate(item,[{opacity:0,transform:'translateX(-35px) rotate(-5deg)'},{opacity:1,transform:end}],1000+i*180);
             });
             node.querySelectorAll('.sales-bar').forEach((bar,i) => animate(bar,[{transform:'scaleY(.05)'},{transform:'scaleY(1)'}],180+i*150,1100));
+            // Sales: reveal labels after the bars rise so numbers stay legible.
             node.querySelectorAll('.sales-bar b').forEach((label,i) => animate(label,[{opacity:0},{opacity:1}],1000+i*150,450));
             node.querySelectorAll('.rating-pair > div').forEach((item,i) => animate(item,[{opacity:0,transform:`translateX(${i ? '-35' : '35'}px)`},{opacity:1,transform:'translateX(0)'}],200+i*100,1000));
+            // Reviews: separate the experiences before revealing complaint themes.
             const rule = node.querySelector('.rating-rule');
             if (rule) animate(rule,[{transform:'rotate(0deg) scaleY(0)'},{transform:'rotate(20deg) scaleY(1)'}],350,850);
             node.querySelectorAll('.review-topics span').forEach((item,i) => animate(item,[{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'translateY(0)'}],950+i*130,650));
@@ -75,6 +82,8 @@ export {};
     }
     enableScrollMotion();
     motion.addEventListener('change', () => {
+      // This cancels running animations if the OS motion setting changes while
+      // the page is open, without requiring the visitor to reload.
       backgroundPaused = motion.matches; updateBackground();
       observer?.disconnect();
       entrances.forEach(animation => animation.cancel()); entrances.clear();

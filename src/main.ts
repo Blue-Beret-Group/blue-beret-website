@@ -8,6 +8,8 @@ export {};
   type Scenario = { sales: number; gm: number; wagesPct: number; wagesAmt: number; final: number;
     gmCard: {s: Status; fig: string; desc: string}; tradingCard: {s: Status; v: number; desc: string};
     ncpCard: {s: Status; v: number; desc: string}; agencyCard: {s: Status; fig: string; desc: string} };
+  // This finds an element with its expected TypeScript type and reports a
+  // missing element immediately instead of failing later with a null error.
   const required = <T extends Element = HTMLElement>(selector: string): T => {
     const node = document.querySelector<T>(selector);
     if (!node) throw new Error(`Missing page element: ${selector}`);
@@ -52,6 +54,8 @@ export {};
   const tileVals = { sales: 0, gm: 0, wages: 0, final: 0 };
 
   function setTile(key: keyof typeof tiles, target: number, fmt: (value: number) => string) {
+    // This eases the number from its old value to the new one. Reduced-motion
+    // users see the final value immediately.
     const from = tileVals[key];
     tileVals[key] = target;
     const el = tiles[key];
@@ -124,6 +128,7 @@ export {};
   const band = iw / DAYS.length, barW = band * 0.54;
 
   function el(tag: string, attrs: Record<string, string | number>, parent: Element = svg) {
+    // SVG shapes need their own namespace; createElement would make HTML nodes.
     const n = document.createElementNS(NS, tag);
     for (const k in attrs) n.setAttribute(k, String(attrs[k]));
     (parent || svg).appendChild(n);
@@ -168,6 +173,8 @@ export {};
     dl.textContent = day.d;
 
     function showTip() {
+      // This scales chart coordinates to screen pixels and keeps the tooltip
+      // inside the chart when the screen is narrow.
       tip.innerHTML = "<strong>" + day.d + (day.wk ? " · weekend" : "") + "</strong><br>" +
         "avg net sales " + fmtEUR(day.sales) + "<br>avg orders " + day.orders;
       const wr = wrap.getBoundingClientRect();
@@ -232,6 +239,8 @@ export {};
     const ctx = context;
     let w = 0, h = 0, raf = 0, running = false, col = "#2a78d6", tick = 0;
     function size() {
+      // This makes the canvas sharp on high-density displays while keeping
+      // drawing coordinates in CSS pixels. The cap limits rendering work.
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = hero!.clientWidth; h = hero!.clientHeight;
       canvas!.width = w * dpr; canvas!.height = h * dpr;
@@ -244,6 +253,7 @@ export {};
     }
     readAccent();
     class Line {
+      // Keeping only the latest points creates a short moving trace.
       x = 0; y = 0; pts: [number, number][] = []; speed = 0; delay = 0; alpha = 0;
       constructor(delay: number) { this.reset(delay); }
       reset(delay?: number) {
@@ -291,6 +301,7 @@ export {};
       raf = requestAnimationFrame(frame);
     }
     const cio = new IntersectionObserver((es) => {
+      // This stops drawing when the hero is offscreen to avoid wasted work.
       es.forEach((e) => {
         if (e.isIntersecting && !running) { running = true; frame(); }
         else if (!e.isIntersecting && running) { running = false; cancelAnimationFrame(raf); }

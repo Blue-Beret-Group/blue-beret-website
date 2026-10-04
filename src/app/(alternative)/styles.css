@@ -1,12 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Blue Beret. Independent data and AI consultancy in Ireland. Reporting automation, sales analysis and customer insight.">
-  <meta name="theme-color" content="#174af0">
-  <title>Blue Beret — A different view of your data</title>
-  <style>
+
     :root { color-scheme: light; --blue:#174af0; --deep:#1233a0; --ink:#10254c; --muted:#52617b; --paper:#fff; --wash:#edf2ff; --line:#cbd7f0; --ease:cubic-bezier(.2,.8,.2,1); }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; scroll-padding-top:90px; }
@@ -219,84 +211,4 @@
       .closing { padding-block:70px; } footer { flex-direction:column; gap:12px; }
     }
     @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation:none!important; transition:none!important; } }
-  </style>
-</head>
-<body>
-  <a class="skip" href="#main">Skip to content</a>
-  <header class="shell nav">
-    <a class="brand" href="#top" aria-label="Blue Beret home"><span class="brand-mark" aria-hidden="true"></span>Blue Beret</a>
-    <div class="nav-right"><a href="#work">Selected work</a><a href="#contact">Get in touch</a><button class="menu-button" id="menuOpen" aria-haspopup="dialog">Menu <span class="menu-lines" aria-hidden="true"></span></button></div>
-  </header>
-  <main id="main">
-    <div class="opening" id="top">
-    <section class="hero" aria-labelledby="heroTitle">
-      <div class="hero-inner shell">
-        <p class="hero-meta">Independent data &amp; AI consultancy</p>
-        <h1 id="heroTitle">Data into<br>direction.</h1>
-        <div class="report-stage" role="img" aria-label="Illustration: spreadsheet rows become a clear report as you scroll">
-          <div class="report-paper" aria-hidden="true">
-            <p class="report-heading">The everyday spreadsheet<span>Rows, columns. A question waiting to be answered.</span></p>
-            <div class="report-grid"></div>
-            <i class="report-row" style="--i:0"></i><i class="report-row" style="--i:1"></i><i class="report-row" style="--i:2"></i><i class="report-row" style="--i:3"></i>
-            <p class="report-result">A clearer picture.<small>Ready for a closer look. Ready for a decision.</small></p>
-            <p class="report-note">Blue Beret / Illustrative workflow</p>
-          </div>
-          <p class="opening-caption" aria-hidden="true">Spreadsheet <span>→</span> Report <span>↓</span> Scroll to transform</p>
-        </div>
-        <div class="hero-bottom">
-          <p>We turn business questions into clear analysis and software your team can use.</p>
-        </div>
-      </div>
-      <button class="motion-toggle" id="motionToggle" aria-pressed="false">Pause background</button>
-    </section>
-    </div>
-
-    <section class="shell intro" id="about" aria-labelledby="introTitle">
-      <h2 id="introTitle">A fresh perspective.<br>A practical way forward.</h2>
-      <div class="intro-copy"><p>We’re a two-person consultancy in Ireland. We work with the spreadsheets, reports and questions that are already part of your business.</p><p>Sometimes you need a clearer answer. Sometimes you need a tool that takes the repetitive work off your hands. We help you get there.</p><a class="inline-link" href="#services">How we can help <span aria-hidden="true">↗</span></a></div>
-    </section>
-
-    <section class="shell work" id="work" aria-labelledby="workTitle">
-      <h2 class="section-title" id="workTitle">The work speaks.</h2>
-      <div class="projects">
-        <article class="project" id="accounting">
-          <div class="project-art"><p class="art-statement">Same workbook.<br><em>New workflow.</em></p><div class="pipeline" role="img" aria-label="An Excel workbook becomes a dashboard, review note and analysis file"><div class="sheet"><strong>Quarterly accounts</strong><div class="sheet-lines" aria-hidden="true"></div></div><span class="pipeline-arrow" aria-hidden="true">→</span><div class="output-stack"><span>Dashboard</span><span>Review note</span><span>Analysis file</span></div></div></div>
-          <div class="project-caption"><div><h3>O’Sullivan Clarke</h3><p>Reporting automation · July–September 2026</p></div></div>
-          <details><summary>Inside the project</summary><div class="project-text"><p><strong>The question:</strong> could the practice prepare quarterly management-account reviews without repeating the same manual calculations for every retail client?</p><p>We built a local workflow that finds figures by row labels and reporting dates, calculates the comparisons, applies review rules and produces a dashboard, review note and structured analysis file. The practice keeps its existing workbooks.</p><p>Headline figures reconciled across four client workbooks and three comparison periods. After installation, the practice ran additional unseen accounts. A fifth store exposed new format variations; we fixed them and checked the four validated clients again. The accountant checks the output before sending it.</p><dl class="project-facts"><div><dt>Validated during the build</dt><dd>4 client workbooks</dd></div><div><dt>Compared per workbook</dt><dd>3 reporting periods</dd></div><div><dt>Standard workflow</dt><dd>Runs locally</dd></div></dl></div></details>
-        </article>
-        <article class="project" id="sales">
-          <div class="project-art sales-art" role="img" aria-label="Mr Wu average daily net sales: Monday 1,233.91 euro and Saturday 3,665.89 euro"><p class="sales-top">A different kind of Saturday.</p><div class="sales-chart" aria-hidden="true"><div class="sales-bar"><b>€1,234</b></div><div class="sales-bar"><b>€3,666</b></div></div><div class="sales-labels" aria-hidden="true"><span>Monday</span><span>Saturday</span></div></div>
-          <div class="project-caption"><div><h3>Mr Wu</h3><p>Sales analysis &amp; channel economics</p></div></div>
-          <details><summary>Inside the project</summary><div class="project-text"><p>We examined 396 daily records covering January 2025–January 2026: 30,291 orders and €878,385.31 in recorded net sales.</p><p>Saturday averaged €3,665.89 in sales, almost three times Monday’s €1,233.91. The analysis informed recommendations for staffing, stock preparation and a limited direct-order incentive pilot.</p><p>Moving 20% of Just Eat orders to owned channels produced a <strong>modelled €7,606.82 improvement before food costs</strong>, assuming all displaced demand was retained. This is an opportunity estimate, not a realised saving. Ingredient costs were absent from the records; incentives and fulfilment costs would also affect the outcome.</p></div></details>
-        </article>
-        <article class="project" id="reviews">
-          <div class="project-art rating-art"><div class="rating-pair"><div><strong>4.3</strong><p>Dine-in<br>average rating / 5</p></div><span class="rating-rule" aria-hidden="true"></span><div><strong>3.1</strong><p>Delivery &amp; takeaway<br>average rating / 5</p></div></div><p>One restaurant. Two customer experiences.</p><div class="review-topics"><span>Wait times</span><span>Food quality</span><span>Service</span></div></div>
-          <div class="project-caption"><div><h3>Chuan City</h3><p>Customer reviews &amp; reputation analysis</p></div></div>
-          <details><summary>Inside the project</summary><div class="project-text"><p>Chuan City wanted to understand declining Google ratings. We collected 361 reviews, retained 250 with full metadata and analysed the 146 containing written text.</p><p>Delivery and takeaway averaged 3.1 stars against 4.3 for dine-in. Delivery wait time appeared negatively in <strong>59% of one-star reviews</strong>; food quality appeared negatively in 48%. These review patterns suggest where to investigate, without establishing causation.</p><p>We recommended peak-time delivery limits, proactive wait updates and clearer driver conduct standards. These were recommendations from the analysis; we do not claim subsequent changes in ratings.</p></div></details>
-        </article>
-      </div>
-    </section>
-
-    <section class="services" id="services" aria-labelledby="servicesTitle"><div class="shell">
-      <div class="services-header"><h2 id="servicesTitle">From the first question<br>to a working answer.</h2></div>
-      <div class="service-row"><h3>Data &amp; AI advice</h3><p>Make sense of what you have, identify what is worth changing and work out where AI or automation could help.</p></div>
-      <div class="service-row"><h3>Reporting &amp; automation</h3><p>Turn recurring spreadsheet work into a repeatable process, with clear outputs and checks your team can understand.</p></div>
-      <div class="service-row"><h3>Business analysis</h3><p>Understand sales, channel costs and customer feedback. Get findings tied to the decisions you need to make.</p></div>
-    </div></section>
-
-    <section class="shell team" id="team" aria-labelledby="teamTitle">
-      <div class="team-heading"><h2 id="teamTitle">Two people.<br>A fresh pair of eyes.</h2><p>We’re the people behind Blue Beret. This space will introduce who we are, what we bring to the work and why we started the business.</p></div>
-      <div class="people">
-        <article class="person"><div class="portrait"><span class="portrait-number" aria-hidden="true">01</span><span class="portrait-label">Portrait to come</span></div><h3>[Your name]</h3><p class="person-role">Co-founder · [Your focus]</p><p class="person-bio">[A short introduction in your own words: your background, the work you enjoy and what you bring to Blue Beret.]</p></article>
-        <article class="person"><div class="portrait"><span class="portrait-number" aria-hidden="true">02</span><span class="portrait-label">Portrait to come</span></div><h3>[Your name]</h3><p class="person-role">Co-founder · [Your focus]</p><p class="person-bio">[A short introduction in your own words: your background, the work you enjoy and what you bring to Blue Beret.]</p></article>
-      </div>
-    </section>
-    <section class="shell closing" id="contact"><p>Have a question your data could answer?</p><h2><a href="mailto:hello@blueberet.example">Let’s take a look. <span aria-hidden="true">↗</span></a></h2></section>
-  </main>
-  <footer class="shell"><span>Blue Beret Group · Independent consultancy, Ireland</span><a href="index.html">View the original website</a><span>© <span id="year">2026</span> Blue Beret Group</span></footer>
-
-  <dialog class="menu-dialog" id="menuDialog" aria-labelledby="menuTitle"><div class="dialog-top"><span id="menuTitle">Explore Blue Beret</span><button class="close" data-close="menuDialog">Close menu</button></div><nav class="menu-links" aria-label="Main menu"><a href="#about">Meet Blue Beret</a><a href="#work">Selected work</a><a href="#services">How we help</a><a href="#contact">Get in touch</a></nav><p class="menu-foot">Data, analysis and automation for the way you work.</p></dialog>
-
-  <script type="module" src="/src/alternative.ts"></script>
-</body>
-</html>
+  
