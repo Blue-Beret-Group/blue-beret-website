@@ -1,11 +1,12 @@
 # Blue Beret — Website
 
-Single-file landing page for Blue Beret, a data and AI consulting firm.
+Blue Beret's website, built with HTML, CSS and strict TypeScript using Vite.
 
-- `index.html` — the entire site: styles, scripts, fonts, and images are inlined, so it runs anywhere with no build step.
+- `index.html` — original homepage, with its behaviour in `src/main.ts`.
+- `src/alternative.ts` — alternative website's TypeScript behaviour.
 - `alt.html` — separate blue-and-white agency concept inspired by UXPERT's
   large typography and motion-led introduction. Open directly or visit
-  `/alt.html` on the local server. The original homepage is unchanged.
+  `/alt.html` on the development or preview server.
 
 The alternative uses scroll-triggered text and project reveals, staggered
 report graphics, rising sales bars and a scroll-linked hero graphic in supported
@@ -14,15 +15,23 @@ content remains readable without JavaScript. The menu is keyboard-accessible.
 
 ## Preview locally
 
-Open `index.html` in a browser, or serve it:
+Install dependencies and start the development server (Node.js 22.12+):
 
 ```
-python -m http.server 8000
+npm ci
+npm run dev
 ```
 
 ## Deploy
 
-The file deploys as-is to any static host (Vercel, Netlify, GitHub Pages, Cloudflare Pages).
+Run `npm run build` to type-check both scripts and compile both pages into `dist/`.
+Run `npm run preview` to check the production build locally.
+
+Import this repository into Vercel. `vercel.json` configures the Vite preset,
+`npm run build` command and `dist` output directory. The homepage is `/` and
+option two is `/alt.html`. TypeScript is compiled to browser JavaScript;
+opening the source HTML directly with `file://` no longer runs its scripts.
+Other static hosts should publish the complete `dist/` directory, including assets.
 
 ## Content and design
 
