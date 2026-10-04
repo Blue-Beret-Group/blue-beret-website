@@ -95,6 +95,7 @@
   --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 28px rgba(0,0,0,0.35);
 }
 :root[data-theme="light"] {
+  color-scheme: light;
   --page: #ffffff; --surface: #f2f7ff; --ink: #162f55; --ink-2: #465b78;
   --muted: #52627b; --hairline: #dce7f5; --accent: #256ac2; --accent-deep: #1956a5;
   --accent-navy: #1956a5; --bar-base: #6da7ec; --bar-emph: #256abf; --neg: #e34948; --grid: #e6ebf3;
