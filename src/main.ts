@@ -242,6 +242,52 @@ export {};
   });
   }
 
+  /* ---------- Contact form ---------- */
+  const form = document.querySelector<HTMLFormElement>('#contactForm');
+  if (form) {
+    // The server repeats every check; these only give quicker feedback.
+    const startedAt = Date.now();
+    const status = required('#contactStatus');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const setStatus = (text: string, kind: 'error' | 'ok' | '') => {
+      status.textContent = text;
+      status.className = 'form-status field-wide' + (kind ? ' ' + kind : '');
+    };
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input:not([name="website"]), textarea'));
+      fields.forEach((f) => f.setAttribute('aria-invalid', String(!f.checkValidity())));
+      const invalid = fields.find((f) => !f.checkValidity());
+      if (invalid) {
+        const msg = invalid.name === 'email' ? 'Please enter a valid email address.'
+          : invalid.name === 'message' && invalid.value.trim() ? 'Please tell us a little more about the problem (at least 20 characters).'
+          : 'Please fill in the required fields.';
+        setStatus(msg, 'error');
+        invalid.focus();
+        return;
+      }
+      const payload: Record<string, string | number> = { startedAt };
+      new FormData(form).forEach((value, key) => { if (typeof value === 'string') payload[key] = value; });
+      button.disabled = true;
+      setStatus('Sending…', '');
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({})) as { error?: string };
+        if (!res.ok) throw new Error(data.error || 'We couldn’t send your message. Please email us instead.');
+        form.reset();
+        fields.forEach((f) => f.removeAttribute('aria-invalid'));
+        setStatus('Thanks, your message is on its way. We’ll reply by email.', 'ok');
+      } catch (err) {
+        const msg = err instanceof Error && err.message !== 'Failed to fetch' ? err.message : 'We couldn’t send your message. Please email us instead.';
+        setStatus(msg, 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
   /* ---------- Hero sparkline canvas ---------- */
   (function () {
     if (reduced) return;
