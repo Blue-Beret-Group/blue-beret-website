@@ -16,8 +16,7 @@
     .skip:focus { top:10px; }
     .nav { height:88px; display:flex; justify-content:space-between; align-items:center; }
     .brand { font-size:24px; font-weight:750; letter-spacing:-1px; text-decoration:none; display:flex; align-items:center; gap:11px; }
-    .brand-mark { width:25px; height:25px; background:var(--blue); border-radius:50% 50% 4px 50%; transform:rotate(-20deg); position:relative; }
-    .brand-mark::after { content:""; position:absolute; width:12px; height:3px; background:var(--blue); bottom:-5px; right:0; }
+    .brand-mark { display:block; width:36px; height:36px; }
     .nav-right { display:flex; align-items:center; gap:42px; }
     .nav-right > a { text-decoration:none; font-size:14px; }
     .nav-right > a:hover { color:var(--blue); }

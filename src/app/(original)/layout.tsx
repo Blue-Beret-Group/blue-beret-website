@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import './styles.css';
-export const metadata: Metadata = { title: "Blue Beret | Data & AI Consulting", description: 'Blue Beret: independent data analysis, reporting and automation in Ireland.' };
+export const metadata: Metadata = { title: "Blue Beret | Data & AI Consulting", description: 'Blue Beret: independent data analysis, reporting and automation in Ireland.', icons: { icon: '/icon.png', apple: '/apple-icon.png' } };
 export default function Layout({children}: {children: ReactNode}) {
   // This preserves the original blue-and-white palette even when the visitor
   // uses dark mode on their device.

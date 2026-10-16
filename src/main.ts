@@ -45,6 +45,10 @@ export {};
   let current: keyof typeof SCENARIOS = "steady";
   let amber = 15;
 
+  // Each page has only some of these widgets, so each block checks for its
+  // own markup before running.
+  if (document.querySelector('#tiles')) {
+
   const tiles = {
     sales: required('[data-tile="sales"]'),
     gm: required('[data-tile="gm"]'),
@@ -116,33 +120,39 @@ export {};
   });
 
   render();
+  }
+
+  const NS = "http://www.w3.org/2000/svg";
+  const charts: SVGSVGElement[] = [];
 
   /* ---------- Case study bar chart ---------- */
-  const DAYS = [{ d: "Monday", sales: 1233.91, orders: 42.43 }, { d: "Saturday", sales: 3665.89, orders: 125.51, wk: true }];
-  const svg = required<SVGSVGElement>('#weekChart');
-  const NS = "http://www.w3.org/2000/svg";
+  // Averages indexed to Monday = 100, so no absolute revenue is published.
+  const DAYS = [{ d: "Monday", sales: 100, orders: 100 }, { d: "Saturday", sales: 297, orders: 296, wk: true }];
+  const svg = document.querySelector<SVGSVGElement>('#weekChart');
+  if (svg) {
+  charts.push(svg);
   const W = 720, H = 300, M = { top: 26, right: 12, bottom: 34, left: 56 };
   const iw = W - M.left - M.right, ih = H - M.top - M.bottom;
-  const yMax = 4000;
+  const yMax = 300;
   const y = (v: number) => M.top + ih - (v / yMax) * ih;
   const band = iw / DAYS.length, barW = band * 0.54;
 
-  function el(tag: string, attrs: Record<string, string | number>, parent: Element = svg) {
+  function el(tag: string, attrs: Record<string, string | number>, parent: Element = svg!) {
     // SVG shapes need their own namespace; createElement would make HTML nodes.
     const n = document.createElementNS(NS, tag);
     for (const k in attrs) n.setAttribute(k, String(attrs[k]));
-    (parent || svg).appendChild(n);
+    parent.appendChild(n);
     return n;
   }
 
-  for (let g = 0; g <= 4; g++) {
-    const gy = y(g * 1000);
+  for (let g = 0; g <= 3; g++) {
+    const gy = y(g * 100);
     el("line", { x1: M.left, x2: W - M.right, y1: gy, y2: gy,
       stroke: g === 0 ? "var(--hairline)" : "var(--grid)", "stroke-width": 1 });
     if (g > 0) {
       const lbl = el("text", { x: M.left - 10, y: gy + 4, "text-anchor": "end",
         "font-family": "var(--font-mono)", "font-size": 11, fill: "var(--muted)" });
-      lbl.textContent = "€" + g + "k";
+      lbl.textContent = String(g * 100);
     }
   }
 
@@ -153,7 +163,7 @@ export {};
     const cx = M.left + band * i + band / 2;
     const x0 = cx - barW / 2, yTop = y(day.sales), h = M.top + ih - yTop, r = 4;
     const grp = el("g", { class: "bar", tabindex: 0, role: "img",
-      "aria-label": day.d + ": average net sales " + fmtEUR(day.sales) + ", average orders " + day.orders });
+      "aria-label": day.d + ": average net sales index " + day.sales + ", average orders index " + day.orders });
     el("path", {
       class: "bar-rect",
       d: "M" + x0 + " " + (yTop + h) + " L" + x0 + " " + (yTop + r) +
@@ -166,7 +176,7 @@ export {};
     if (day.wk) {
       const v = el("text", { x: cx, y: yTop - 8, "text-anchor": "middle",
         "font-family": "var(--font-mono)", "font-size": 11.5, fill: "var(--ink-2)" }, grp);
-      v.textContent = "€" + day.sales.toLocaleString("en-IE");
+      v.textContent = String(day.sales);
     }
     const dl = el("text", { x: cx, y: H - 12, "text-anchor": "middle",
       "font-family": "var(--font-mono)", "font-size": 12, fill: "var(--ink-2)" });
@@ -176,7 +186,7 @@ export {};
       // This scales chart coordinates to screen pixels and keeps the tooltip
       // inside the chart when the screen is narrow.
       tip.innerHTML = "<strong>" + day.d + (day.wk ? " · weekend" : "") + "</strong><br>" +
-        "avg net sales " + fmtEUR(day.sales) + "<br>avg orders " + day.orders;
+        "net sales index " + day.sales + "<br>orders index " + day.orders;
       const wr = wrap.getBoundingClientRect();
       const sx = wr.width / W;
       let left = cx * sx + 14, top = yTop * sx;
@@ -196,9 +206,10 @@ export {};
   const tbody = required('#chartTableBody');
   DAYS.forEach((day) => {
     const tr = document.createElement("tr");
-    tr.innerHTML = "<td>" + day.d + "</td><td>" + fmtEUR(day.sales) + "</td><td>" + day.orders + "</td>";
+    tr.innerHTML = "<td>" + day.d + "</td><td>" + day.sales + "</td><td>" + day.orders + "</td>";
     tbody.appendChild(tr);
   });
+  }
 
   /* Negative mentions: supplied case-study Figure 1, one-star reviews only. */
   const THEMES = [
@@ -206,11 +217,13 @@ export {};
     {t:"Delivery service",neg:41}, {t:"Dine-in service",neg:37},
     {t:"Order accuracy",neg:33}, {t:"Value for money",neg:19}
   ];
-  const rsvg = required<SVGSVGElement>('#revChart');
+  const rsvg = document.querySelector<SVGSVGElement>('#revChart');
+  if (rsvg) {
+  charts.push(rsvg);
   function rel(tag: string, attrs: Record<string, string | number>) {
     const n = document.createElementNS(NS, tag);
     for (const k in attrs) n.setAttribute(k, String(attrs[k]));
-    rsvg.appendChild(n); return n;
+    rsvg!.appendChild(n); return n;
   }
   THEMES.forEach((th,i) => {
     const y = 18 + i * 46;
@@ -227,6 +240,53 @@ export {};
     const label=rel("text",{x:170+v*6.4,y:320,fill:"var(--muted)","font-size":14,"text-anchor":"middle"});
     label.textContent=v+"%";
   });
+  }
+
+  /* ---------- Contact form ---------- */
+  const form = document.querySelector<HTMLFormElement>('#contactForm');
+  if (form) {
+    // The server repeats every check; these only give quicker feedback.
+    const startedAt = Date.now();
+    const status = required('#contactStatus');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const setStatus = (text: string, kind: 'error' | 'ok' | '') => {
+      status.textContent = text;
+      status.className = 'form-status field-wide' + (kind ? ' ' + kind : '');
+    };
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input:not([name="website"]), textarea'));
+      fields.forEach((f) => f.setAttribute('aria-invalid', String(!f.checkValidity())));
+      const invalid = fields.find((f) => !f.checkValidity());
+      if (invalid) {
+        const msg = invalid.name === 'email' ? 'Please enter a valid email address.'
+          : invalid.name === 'message' && invalid.value.trim() ? 'Please tell us a little more about the problem (at least 20 characters).'
+          : 'Please fill in the required fields.';
+        setStatus(msg, 'error');
+        invalid.focus();
+        return;
+      }
+      const payload: Record<string, string | number> = { startedAt };
+      new FormData(form).forEach((value, key) => { if (typeof value === 'string') payload[key] = value; });
+      button.disabled = true;
+      setStatus('Sending…', '');
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({})) as { error?: string };
+        if (!res.ok) throw new Error(data.error || 'We couldn’t send your message. Please email us instead.');
+        form.reset();
+        fields.forEach((f) => f.removeAttribute('aria-invalid'));
+        setStatus('Thanks, your message is on its way. We’ll reply by email.', 'ok');
+      } catch (err) {
+        const msg = err instanceof Error && err.message !== 'Failed to fetch' ? err.message : 'We couldn’t send your message. Please email us instead.';
+        setStatus(msg, 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
 
   /* ---------- Hero sparkline canvas ---------- */
   (function () {
@@ -336,7 +396,7 @@ export {};
 
   /* ---------- Charts grow in on scroll ---------- */
   if (!reduced && "IntersectionObserver" in window) {
-    [svg, rsvg].forEach((chart) => {
+    charts.forEach((chart) => {
       chart.classList.add("pre");
       chart.querySelectorAll<SVGElement>(".bar-rect").forEach((r, i) => {
         r.style.transitionDelay = (i * 60) + "ms";
@@ -347,8 +407,7 @@ export {};
         if (e.isIntersecting) { e.target.classList.remove("pre"); gio.unobserve(e.target); }
       });
     }, { threshold: 0.35 });
-    gio.observe(svg);
-    gio.observe(rsvg);
+    charts.forEach((chart) => gio.observe(chart));
   }
 
   /* ---------- Scroll reveal ---------- */

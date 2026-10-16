@@ -12,7 +12,7 @@ export function AlternativeSite() {
 <div>
   <a className="skip" href="#main">Skip to content</a>
   <header className="shell nav">
-    <a className="brand" href="#top" aria-label="Blue Beret home"><span className="brand-mark" aria-hidden="true" />Blue Beret</a>
+    <a className="brand" href="#top" aria-label="Blue Beret home"><img className="brand-mark" src="/logo.png" width={36} height={36} alt="" aria-hidden="true" />Blue Beret</a>
     <div className="nav-right"><a href="#work">Selected work</a><a href="#contact">Get in touch</a><button className="menu-button" id="menuOpen" aria-haspopup="dialog">Menu <span className="menu-lines" aria-hidden="true" /></button></div>
   </header>
   <main id="main">
