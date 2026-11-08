@@ -591,7 +591,6 @@ section, header { scroll-margin-top: 96px; }
 
 
 /* Short homepage plus one page per case study. */
-.placeholder { font-family: var(--font-mono); font-size: 13px !important; color: var(--st-med-ink) !important; background: color-mix(in srgb, var(--st-med) 12%, transparent); border: 1px dashed var(--st-med); padding: 10px 14px; }
 .about { border-top: 1px solid var(--hairline); }
 .about .section-head { margin-bottom: 0; }
 .about .section-head p { font-size: 18px; line-height: 1.7; max-width: 64ch; }
@@ -643,8 +642,8 @@ section, header { scroll-margin-top: 96px; }
 /* Contact form */
 .contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 64px; align-items: start; }
 .contact-copy { display: flex; flex-direction: column; }
-.contact-alt { font-size: 14px; color: var(--muted) !important; }
-.contact-alt a { color: var(--accent-deep); font-weight: 600; text-underline-offset: 4px; }
+.contact-alt { font-size: 14px; }
+.contact-alt a { font-weight: 600; text-underline-offset: 4px; }
 .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; background: var(--page); border: 1px solid var(--hairline); border-top: 2px solid var(--accent); border-radius: 3px; padding: 28px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
 .field-wide { grid-column: 1 / -1; }
@@ -663,3 +662,43 @@ section, header { scroll-margin-top: 96px; }
 .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
 @media(max-width: 900px) { .contact-grid { grid-template-columns: 1fr; gap: 32px; } }
 @media(max-width: 560px) { .contact-form { grid-template-columns: 1fr; padding: 20px; } }
+
+/* Deep blue theme: animated gradient bands for the hero, case-study
+   headers and contact section; smooth reveals as content scrolls in. */
+:root { --deep-1: #06163a; --deep-2: #0c2c6a; --deep-3: #1a55b8; --on-deep: #eef4ff; --on-deep-2: #b9cdef; --on-deep-accent: #8fc2ff; }
+.hero, .case-hero, .cta {
+  --hero-line: #9ccbff;
+  position: relative; overflow: hidden; border-bottom: 0; color: var(--on-deep);
+  background:
+    radial-gradient(55% 75% at 85% 5%, rgba(86, 156, 255, .38), transparent 62%),
+    radial-gradient(45% 65% at 5% 100%, rgba(37, 110, 235, .32), transparent 60%),
+    linear-gradient(135deg, var(--deep-1) 0%, var(--deep-2) 55%, var(--deep-3) 100%);
+  background-size: 170% 170%, 170% 170%, 100% 100%;
+  animation: driftGradient 24s ease-in-out infinite alternate;
+}
+@keyframes driftGradient {
+  0% { background-position: 0% 0%, 100% 100%, 0 0; }
+  100% { background-position: 100% 70%, 0% 30%, 0 0; }
+}
+.hero h1, .case-hero h1, .cta h2 { color: #fff; }
+.hero-copy > p:not(.eyebrow), .case-intro, .cta .contact-copy p { color: var(--on-deep-2); }
+.hero .eyebrow, .case-hero .eyebrow { color: var(--on-deep-accent); }
+.case-hero .case-back, .cta .contact-alt a { color: var(--on-deep-accent); }
+.hero .btn-solid, .cta .contact-copy .btn-solid { background: #fff; color: var(--deep-2); }
+.hero .btn-solid:hover { background: #dcebff; color: var(--deep-1); }
+.hero .btn-ghost { border-color: rgba(255,255,255,.4); color: #fff; }
+.hero .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,.08); color: #fff; }
+.contact-form { color: var(--ink); box-shadow: 0 24px 60px rgba(3, 12, 36, .35); }
+.cta { border-top: 0; }
+
+/* Entrances */
+.hero-copy > *, .case-hero .wrap > * { animation: riseIn .9s cubic-bezier(.2, .7, .2, 1) backwards; }
+.case-hero .wrap > *:nth-child(2) { animation-delay: .08s; }
+.case-hero .wrap > *:nth-child(3) { animation-delay: .16s; }
+.case-hero .wrap > *:nth-child(4) { animation-delay: .26s; }
+.reveal { opacity: 1; transform: none; transition: opacity .85s cubic-bezier(.2, .7, .2, 1), transform .85s cubic-bezier(.2, .7, .2, 1); }
+.reveal.pre-reveal { opacity: 0; transform: translateY(28px); }
+.work-card { transition: opacity .85s cubic-bezier(.2, .7, .2, 1), transform .45s cubic-bezier(.2, .7, .2, 1), box-shadow .35s ease, border-color .2s; }
+.work-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(12, 44, 106, .12); }
+.trust-list li { transition: opacity .85s cubic-bezier(.2, .7, .2, 1), transform .45s cubic-bezier(.2, .7, .2, 1); }
+.trust-list li:hover { transform: translateY(-3px); }

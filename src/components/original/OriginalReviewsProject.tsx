@@ -5,23 +5,23 @@ export function OriginalReviewsProject() {
 <OriginalCaseStudy
   eyebrow="Case study · Customer review analysis"
   title={<>One restaurant.<br />Two different experiences.</>}
-  intro="Chuan City wanted to understand its declining Google ratings. We examined review patterns across dine-in, takeaway and delivery to find where customers’ experiences differed."
-  next={{href: '/work/osc-01', name: 'O’Sullivan Clarke'}}
+  intro="A family-owned Chinese restaurant wanted to understand its declining Google ratings. We examined review patterns across dine-in, takeaway and delivery to find where customers’ experiences differed."
+  next={{href: '/work/accountancy-review', name: 'Small chartered accountancy'}}
 >
 <section className="section review-project" id="case-reviews" aria-label="Project summary">
   <div className="wrap">
     <div className="rating-comparison" aria-label="Average ratings by ordering channel">
-      <div><strong>4.3<span>/5</span></strong><p>Dine-in</p></div>
-      <div><strong>3.1<span>/5</span></strong><p>Delivery &amp; takeaway</p></div>
-      <div><strong>1.2</strong><p>Star gap between ordering channels</p></div>
+      <div className="reveal"><strong>4.3<span>/5</span></strong><p>Dine-in</p></div>
+      <div className="reveal"><strong>3.1<span>/5</span></strong><p>Delivery &amp; takeaway</p></div>
+      <div className="reveal"><strong>1.2</strong><p>Star gap between ordering channels</p></div>
     </div>
     <div className="engagement-layout">
       <CaseFacts facts={[
-        {label: 'Sector', value: 'Hospitality / restaurant, Dublin'},
+        {label: 'Sector', value: 'Hospitality / restaurant'},
         {label: 'Data', value: 'Public Google reviews, Jan 2019–Feb 2026'},
         {label: 'Our scope', value: 'Data collection, sentiment and topic analysis, recommendations'}
       ]} />
-      <div className="review-story">
+      <div className="review-story reveal">
         <h2>Beyond an overall star rating</h2>
         <p>We collected 361 public Google reviews, kept the 250 with full details, and analysed the 146 that included written comments. We classified sentiment by operational theme, then used topic modelling to explore clusters of complaints.</p>
         <h2>Where the complaints concentrate</h2>

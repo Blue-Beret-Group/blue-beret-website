@@ -9,13 +9,8 @@ export function OriginalServices() {
     <div className="svcs">
       <article className="svc reveal">
         <p className="svc-kind">Consulting</p>
-        <h3>Decide what to build</h3>
-        <p>We review the process, the data and the constraints, then give you a clear scope and honest advice on where automation will actually help.</p>
-      </article>
-      <article className="svc reveal">
-        <p className="svc-kind">Systems</p>
-        <h3>Make reporting repeatable</h3>
-        <p>We build tools around the workbooks and exports you already use, including dashboards, checks and draft reports you can run again next quarter.</p>
+        <h3>Decide what to build, then build it</h3>
+        <p>We review the process, the data and the constraints, then give you a clear scope and honest advice on where automation will actually help. When it will, we build it: dashboards, checks, draft reports and automations around the workbooks and exports you already use, ready to run again next quarter.</p>
       </article>
       <article className="svc reveal">
         <p className="svc-kind">Analysis</p>

@@ -19,7 +19,7 @@ export function OriginalCaseStudy({eyebrow, title, intro, next, children}: {
 {children}
 <nav className="case-next" aria-label="More case studies">
   <div className="wrap">
-    <a href={next.href}>
+    <a className="reveal" href={next.href}>
       <span className="project-sector">Next case study <span aria-hidden="true">→</span></span>
       <strong>{next.name}</strong>
     </a>
@@ -30,7 +30,7 @@ export function OriginalCaseStudy({eyebrow, title, intro, next, children}: {
 
 export function CaseFacts({facts}: {facts: CaseFact[]}) {
   return (
-    <dl className="engagement-meta">
+    <dl className="engagement-meta reveal">
       {facts.map((f) => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}
     </dl>
   );

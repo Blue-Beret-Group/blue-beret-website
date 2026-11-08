@@ -11,8 +11,8 @@ export function OriginalHome() {
   <canvas id="heroCanvas" aria-hidden="true" />
   <div className="wrap hero-grid">
     <div className="hero-copy">
-      <p className="eyebrow">Independent data consultancy · Ireland</p>
-      <h1>Useful answers.<br />Working software.</h1>
+      <p className="eyebrow">Independent tech / data consultancy · Ireland</p>
+      <h1>Modern data and AI tools.<br />No one left behind.</h1>
       <p>We help small businesses, charities and NGOs turn their data into clear analysis and tools their teams can keep using.</p>
       <div className="hero-ctas">
         <a className="btn btn-solid" href="/#work">Our work</a>

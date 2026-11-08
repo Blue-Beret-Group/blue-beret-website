@@ -309,7 +309,7 @@ export {};
     size();
     window.addEventListener("resize", size);
     function readAccent() {
-      col = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#2a78d6";
+      col = getComputedStyle(hero!).getPropertyValue("--hero-line").trim() || "#2a78d6";
     }
     readAccent();
     class Line {
@@ -322,7 +322,7 @@ export {};
       this.pts = [];
       this.speed = 1.1 + Math.random() * 0.9;
       this.delay = delay != null ? delay : 60 + Math.random() * 240;
-      this.alpha = 0.09 + Math.random() * 0.09;
+      this.alpha = 0.16 + Math.random() * 0.16;
       }
       step() {
       if (this.delay > 0) { this.delay--; return; }
@@ -351,8 +351,8 @@ export {};
       ctx.globalAlpha = 1;
       }
     }
-    const lines = [new Line(0), new Line(30), new Line(60), new Line(90)];
-    lines.forEach((line, i) => { line.x = w * (i / 4); });
+    const lines = [0, 30, 60, 90, 120, 150].map((d) => new Line(d));
+    lines.forEach((line, i) => { line.x = w * (i / lines.length); });
     function frame() {
       tick++;
       if (tick % 40 === 0) readAccent();
@@ -420,13 +420,19 @@ export {};
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          e.target.classList.add("in");
+          e.target.classList.remove("pre-reveal");
           io.unobserve(e.target);
-          setTimeout(() => { (e.target as HTMLElement).style.transitionDelay = ""; }, 1100);
+          setTimeout(() => { (e.target as HTMLElement).style.transitionDelay = ""; }, 1300);
         }
       });
-    }, { threshold: 0.15 });
-    document.querySelectorAll(".reveal").forEach((n) => io.observe(n));
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    // Only content that starts below the fold is hidden and revealed, so
+    // nothing already on screen blinks out while the script loads.
+    document.querySelectorAll<HTMLElement>(".reveal").forEach((n) => {
+      if (n.getBoundingClientRect().top < innerHeight * 0.92) return;
+      n.classList.add("pre-reveal");
+      io.observe(n);
+    });
   } else {
     document.querySelectorAll(".reveal").forEach((n) => n.classList.add("in"));
   }

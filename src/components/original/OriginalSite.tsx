@@ -36,7 +36,7 @@ export function OriginalSite({children}: {children: ReactNode}) {
       </a>
       <div className="footer-copy">
         <span>Blue Beret Group · Ireland</span>
-        <span>Project findings are from our case studies. Demo figures on the O’Sullivan Clarke page are fictional.</span>
+        <span>Project findings are from our case studies. Demo figures on the accountancy case study are fictional.</span>
       </div>
     </div>
   </footer>

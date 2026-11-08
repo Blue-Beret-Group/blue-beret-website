@@ -8,7 +8,7 @@ export function OriginalSalesProject() {
   eyebrow="Case study · Sales & channel economics"
   title={<>A clearer view of<br />the trading week.</>}
   intro="We analysed 396 days of trading records, from January 2025 to January 2026, to understand demand patterns, staffing priorities and the economics of collection, direct delivery and Just Eat."
-  next={{href: '/work/chuan-city', name: 'Chuan City'}}
+  next={{href: '/work/restaurant-reviews', name: 'Family-owned Chinese restaurant'}}
 >
 <section className="section" id="case" aria-label="Project summary">
   <div className="wrap">
@@ -20,7 +20,7 @@ export function OriginalSalesProject() {
     </div>
     <div className="engagement-layout">
       <CaseFacts facts={[
-        {label: 'Sector', value: 'Hospitality / restaurant'},
+        {label: 'Sector', value: 'Hospitality / takeaway'},
         {label: 'Data', value: '396 daily records, Jan 2025–Jan 2026'},
         {label: 'Our scope', value: 'Data cleaning, demand analysis, channel modelling, recommendations'}
       ]} />
@@ -43,8 +43,8 @@ export function OriginalSalesProject() {
       </div>
     </div>
     <div className="case-insights">
-      <div><h2>Staff for the demand you have</h2><p>Saturday averaged almost three times Monday’s sales and order volume. The analysis supported prioritising Friday-to-Sunday staffing, stock preparation and delivery coordination.</p></div>
-      <div><h2>Test the channel opportunity</h2><p>Just Eat accounted for around 32% of orders. We modelled moving 20% of those orders to the restaurant’s own channels while keeping the demand, and found a meaningful profit improvement driven mainly by lower platform fees. We recommended a limited pilot to test customer retention and costs before any wider change.</p></div>
+      <div className="reveal"><h2>Staff for the demand you have</h2><p>Saturday averaged almost three times Monday’s sales and order volume. The analysis supported prioritising Friday-to-Sunday staffing, stock preparation and delivery coordination.</p></div>
+      <div className="reveal"><h2>Test the channel opportunity</h2><p>Just Eat accounted for around 32% of orders. We modelled moving 20% of those orders to the takeaway’s own channels while keeping the demand, and found a meaningful profit improvement driven mainly by lower platform fees. We recommended a limited pilot to test customer retention and costs before any wider change.</p></div>
     </div>
     <p className="case-note"><em>The opportunity is a modelled profit improvement before food costs over the analysed period, not a realised saving. Ingredient costs were not in the source records, and incentives or extra fulfilment costs would also affect the outcome.</em></p>
   </div>

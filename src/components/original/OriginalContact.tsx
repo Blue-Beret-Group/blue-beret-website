@@ -2,12 +2,12 @@ export function OriginalContact() {
   return (
 <section className="cta" id="contact">
   <div className="wrap contact-grid">
-    <div className="contact-copy">
+    <div className="contact-copy reveal">
       <h2>Bring us a problem</h2>
       <p>Tell us what you’re trying to do, which files you work with and where the process gets stuck. We’ll help you work out the next step.</p>
       <p className="contact-alt">Prefer email? <a href="mailto:blueberetgroup@gmail.com">blueberetgroup@gmail.com</a></p>
     </div>
-    <form className="contact-form" id="contactForm" noValidate>
+    <form className="contact-form reveal" id="contactForm" noValidate>
       <div className="field">
         <label htmlFor="cf-name">Name</label>
         <input id="cf-name" name="name" type="text" autoComplete="name" required maxLength={100} />

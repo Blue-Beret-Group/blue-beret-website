@@ -8,20 +8,20 @@ export function OriginalAccountingProject() {
 <OriginalCaseStudy
   eyebrow="Case study · Accounting automation"
   title={<>The workbook stays.<br />The review moves forward.</>}
-  intro="For O’Sullivan Clarke, Chartered Accountants in Co. Kildare, we automated quarterly reviews for retail clients without changing how the practice prepares its accounts."
-  next={{href: '/work/mr-wu', name: 'Mr Wu'}}
+  intro="For a small chartered accountancy in Ireland, we automated quarterly reviews for its retail clients without changing how the practice prepares its accounts."
+  next={{href: '/work/takeaway-sales', name: 'Local takeaway'}}
 >
 <section className="section engagement" id="accounting" aria-label="Project summary">
   <div className="wrap">
     <div className="engagement-layout">
       <CaseFacts facts={[
         {label: 'Sector', value: 'Accounting / convenience retail'},
-        {label: 'Project', value: 'OSC-01 quarterly review'},
+        {label: 'Project', value: 'Quarterly management-account review'},
         {label: 'Timeline', value: 'July–September 2026'},
         {label: 'Our scope', value: <>Workbook extraction, calculations,<br />reporting and desktop launchers</>},
         {label: 'Runs on', value: 'Windows and macOS'}
       ]} />
-      <div className="engagement-story">
+      <div className="engagement-story reveal">
         <h2>The task</h2>
         <p>Each quarter, the practice reviewed management accounts for Spar and Eurospar stores by hand: comparing periods, calculating margins, checking supporting schedules and writing the client review. The workload grew with every store added to the portfolio.</p>
         <h2>What we built</h2>
